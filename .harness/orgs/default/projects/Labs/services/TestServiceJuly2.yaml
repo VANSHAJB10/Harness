@@ -1,0 +1,32 @@
+service:
+  name: TestServiceJuly2
+  identifier: TestServiceJuly2
+  description: created to test remote storage of harness resources and overrides
+  serviceDefinition:
+    type: Kubernetes
+    spec:
+      variables:
+        - name: env
+          type: String
+          description: ""
+          required: true
+          value: dev
+        - name: executionMonth
+          type: String
+          description: ""
+          required: true
+          value: "7"
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: dockervanshajb10
+                imagePath: vanshajb10/harness-labs
+                tag: <+input>
+                digest: ""
+              identifier: harnesslabsImage
+              type: DockerRegistry
+  gitOpsEnabled: false
+  orgIdentifier: default
+  projectIdentifier: Labs
