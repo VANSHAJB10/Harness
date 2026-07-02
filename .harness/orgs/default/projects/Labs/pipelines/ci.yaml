@@ -1,0 +1,39 @@
+pipeline:
+  name: ci
+  identifier: ci
+  projectIdentifier: Labs
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          caching:
+            enabled: false
+            override: true
+            paths: []
+          buildIntelligence:
+            enabled: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: k8testcluster
+              namespace: default
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Say Hi
+                  identifier: Say_Hi
+                  spec:
+                    connectorRef: dockervanshajb10
+                    image: hey-vanshaj
+                    shell: Bash
+                    command: echo "Hi"
