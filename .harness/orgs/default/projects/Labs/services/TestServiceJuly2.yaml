@@ -27,6 +27,23 @@ service:
                 digest: ""
               identifier: harnesslabsImage
               type: DockerRegistry
+      manifests:
+        - manifest:
+            identifier: manifesttt
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: account.adminGithub
+                  gitFetchType: Branch
+                  paths:
+                    - /
+                  repoName: heyme
+                  branch: main
+              valuesPaths: <+input>
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
   gitOpsEnabled: false
   orgIdentifier: default
   projectIdentifier: Labs
