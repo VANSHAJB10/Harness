@@ -1,0 +1,45 @@
+pipeline:
+  name: pipe-remote
+  identifier: piperemote
+  projectIdentifier: Labs
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: custim
+        identifier: custim
+        description: ""
+        type: Custom
+        spec:
+          environment:
+            environmentRef: K8Env
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: lab2infra
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    executionTarget: {}
+                    source:
+                      type: Inline
+                      spec:
+                        script: |-
+                          echo "Value of branchVar: <+stage.variables.branchVar>"
+
+                          # Also print pipeline.branch to see if it is populated at all
+                          echo "pipeline.branch resolved to: '<+pipeline.branch>'"
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
+        variables:
+          - name: branchVar
+            type: String
+            description: ""
+            required: false
+            value: "<+<+pipeline.branch> == \"main\" ? \"prod\" : <+pipeline.branch> == \"preprod\" ? \"preprod\" : \"dev\">"
