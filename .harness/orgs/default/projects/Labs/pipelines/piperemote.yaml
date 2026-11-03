@@ -1,5 +1,5 @@
 pipeline:
-  name: pipe-remote
+  name: pipe-remote-namechanged
   identifier: piperemote
   projectIdentifier: Labs
   orgIdentifier: default
